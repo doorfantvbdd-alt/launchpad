@@ -1775,7 +1775,7 @@ document.getElementById("af-save").addEventListener("click", async ()=>{
       else{ await cloudDb.doc("apps/"+id).set(data); }
       showToast(`${name} saved — visible to everyone`);
     }catch(err){
-      showToast("Shared save failed — kept on this device only");
+      showToast("Couldn't reach Firebase — check your database rules and try again");
       applyLocalAppSave(data, editingId, id);
       renderAll();
     }
@@ -2060,7 +2060,7 @@ initCloud();
 navigate("home");
 </script>
 
-<!-- Firebase: replace the block below with the config you copy from Firebase -->
+<!-- Firebase Realtime Database -->
 <script type="module">
 const firebaseConfig = {
   apiKey: "AIzaSyBdDO4T2NGWDvKiIXDT3FztaWPSj0fwix4",
@@ -2072,30 +2072,59 @@ const firebaseConfig = {
   appId: "1:594794538042:web:75cd915180c60fb553c103"
 };
 
+const TIMEOUT_MS = 10000;
+const withTimeout = (p)=> Promise.race([
+  p,
+  new Promise((_, rej)=> setTimeout(()=> rej(new Error("timeout")), TIMEOUT_MS))
+]);
+/* The Realtime Database drops empty arrays and rejects undefined, so clean values first. */
+const clean = (v)=>{
+  if(Array.isArray(v)) return v.length ? v.map(clean) : null;
+  if(v && typeof v === "object"){
+    const o = {};
+    for(const k of Object.keys(v)){ const c = clean(v[k]); if(c !== undefined) o[k] = c; }
+    return o;
+  }
+  return v === undefined ? null : v;
+};
+/* ...and give them back on the way out so the page always sees arrays. */
+const restore = (d)=>{
+  if(!d || typeof d !== "object") return d;
+  const o = { ...d };
+  if(!("color1" in o)) return o;
+  for(const k of ["tags","features","screens"]) o[k] = Array.isArray(o[k]) ? o[k] : (o[k] && typeof o[k] === "object" ? Object.values(o[k]) : []);
+  return o;
+};
+
 (async ()=>{
   try{
     if(!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("PASTE")) throw new Error("Firebase config not filled in");
     const V = "10.12.2";
-    const [appMod, fs] = await Promise.all([
+    const [appMod, rt] = await Promise.all([
       import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
-      import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`),
+      import(`https://www.gstatic.com/firebasejs/${V}/firebase-database.js`),
     ]);
-    const fdb = fs.getFirestore(appMod.initializeApp(firebaseConfig));
+    const rdb = rt.getDatabase(appMod.initializeApp(firebaseConfig));
+
     const docRef = (path)=>{
-      const r = fs.doc(fdb, ...path.split("/"));
+      const r = rt.ref(rdb, path);
       return {
-        set: (d)=> fs.setDoc(r, d),
-        update: (d)=> fs.updateDoc(r, d),
-        delete: ()=> fs.deleteDoc(r),
-        onSnapshot: (next, err)=> fs.onSnapshot(r, (x)=> next({ exists: x.exists(), data: ()=> x.data() }), err),
+        set: (d)=> withTimeout(rt.set(r, clean(d))),
+        update: (d)=> withTimeout(rt.update(r, clean(d))),
+        delete: ()=> withTimeout(rt.remove(r)),
+        onSnapshot: (next, err)=> rt.onValue(r, (x)=> next({ exists: x.exists(), data: ()=> restore(x.val()) }), err),
       };
     };
     const colRef = (path)=>{
-      const r = fs.collection(fdb, ...path.split("/"));
+      const r = rt.ref(rdb, path);
       return {
-        add: (d)=> fs.addDoc(r, d),
+        add: async (d)=>{ const n = rt.push(r); await withTimeout(rt.set(n, clean(d))); return docRef(path + "/" + n.key); },
         doc: (id)=> docRef(path + "/" + id),
-        onSnapshot: (next, err)=> fs.onSnapshot(r, (x)=> next({ empty: x.empty, docs: x.docs.map(d=>({ id: d.id, data: ()=> d.data() })) }), err),
+        onSnapshot: (next, err)=> rt.onValue(r, (x)=>{
+          const val = x.val() || {};
+          const docs = Object.keys(val).map(id=>({ id, data: ()=> restore(val[id]) }));
+          next({ empty: docs.length === 0, docs });
+        }, err),
       };
     };
     window.__cloud = { db: { doc: docRef, collection: colRef } };
