@@ -267,6 +267,89 @@
   .dots span{ width:10px; height:10px; border-radius:50%; }
   .code-value{ font-family:var(--font-mono); font-size:16px; letter-spacing:0.5px; color: var(--cyan); word-break:break-all; }
 
+  [hidden]{ display:none !important; }
+  .search{ position:relative; }
+  .search input{ flex:1; min-width:0; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font-body); padding:0; }
+  .search input::placeholder{ color:var(--text-faint); }
+  .search input::-webkit-search-cancel-button{ -webkit-appearance:none; }
+  .search:focus-within{ border-color:var(--violet-dim); }
+  .search-results{ position:absolute; top:calc(100% + 8px); left:0; right:0; max-height:min(420px, 62vh); overflow-y:auto; background:var(--panel-solid); border:1px solid var(--panel-border); border-radius:12px; box-shadow:0 24px 60px -16px rgba(0,0,0,.8); padding:6px; z-index:50; }
+  .sr-item{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:10px; border-radius:9px; color:var(--text); min-height:52px; }
+  .sr-item:hover, .sr-item.active{ background:#1D1830; }
+  .sr-icon{ width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#0A0912; flex-shrink:0; }
+  .sr-text{ flex:1; min-width:0; }
+  .sr-title{ display:block; font-size:13.5px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sr-sub{ display:block; font-size:12px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:2px; }
+  .sr-kind{ font-size:10.5px; letter-spacing:.4px; text-transform:uppercase; color:var(--text-faint); border:1px solid var(--panel-border-soft); border-radius:999px; padding:2px 8px; flex-shrink:0; }
+  .sr-empty{ padding:16px 12px; font-size:13px; color:var(--text-faint); }
+  .link-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 18px; border-radius:11px; background:linear-gradient(135deg, var(--violet), var(--violet-dim)); color:#fff; font-size:14px; font-weight:600; text-decoration:none; min-height:44px; box-shadow:0 10px 30px -10px rgba(139,108,255,.6); }
+  .link-btn:hover{ filter:brightness(1.08); }
+  .link-btn svg{ width:16px; height:16px; }
+  .detail-actions{ margin-top:16px; }
+  .cp-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+  .code-box-wrap{ position:relative; aspect-ratio:4/5; width:100%; transition: transform .18s ease; }
+  .code-box-wrap:hover{ transform: translateY(-4px); }
+  .code-box-wrap .code-box{ position:absolute; inset:0; height:100%; aspect-ratio:auto; }
+  .code-box-wrap .code-box:hover{ transform:none; }
+  .cb-copy{ position:absolute; top:10px; right:10px; z-index:2; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(8,6,16,.62); border:1px solid rgba(255,255,255,.22); color:#fff; backdrop-filter:blur(6px); transition: background .15s ease; }
+  .cb-copy:hover{ background:rgba(8,6,16,.85); }
+  .cb-copy svg{ width:16px; height:16px; }
+  .cb-copy:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
+  .cp-app{ font-size:12.5px; color:var(--text-dim); margin-bottom:4px; }
+  .cp-stack{ display:flex; flex-direction:column; gap:26px; margin-top:28px; max-width:860px; }
+  .cp-section h3{ font-family:var(--font-display); font-size:15px; font-weight:600; margin-bottom:12px; }
+  .cp-instructions{ background:var(--panel-solid); border:1px solid var(--panel-border-soft); border-radius:var(--radius); padding:20px 22px; font-size:14px; line-height:1.7; color:var(--text); white-space:pre-wrap; overflow-wrap:anywhere; }
+  .cp-instructions.empty{ color:var(--text-faint); }
+  .cp-images{ display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:14px; }
+  .cp-img{ aspect-ratio:4/3; border-radius:12px; border:1px solid var(--panel-border-soft); background-size:cover; background-position:center; padding:0; cursor:zoom-in; transition: transform .15s ease, border-color .15s ease; }
+  .cp-img:hover{ transform:translateY(-3px); border-color:var(--violet-dim); }
+  .lightbox{ position:fixed; inset:0; z-index:300; background:rgba(6,5,12,.9); display:flex; align-items:center; justify-content:center; padding:24px; opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .lightbox.show{ opacity:1; pointer-events:auto; }
+  .lightbox img{ max-width:100%; max-height:100%; border-radius:10px; object-fit:contain; }
+  .lb-close{ position:absolute; top:14px; right:18px; font-size:34px; line-height:1; color:#fff; padding:4px 12px; border-radius:10px; }
+  .lb-close:hover{ background:rgba(255,255,255,.12); }
+  .code-row .cr-more{ display:flex; flex-direction:column; gap:8px; }
+  .code-row .cr-pics{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .code-row .cr-pic{ position:relative; width:54px; height:42px; border-radius:7px; background-size:cover; background-position:center; border:1px solid var(--panel-border-soft); }
+  .code-row .cr-pic button{ position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%; background:#3A1418; color:#FF8A8A; border:1px solid #55232A; font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .code-row label.cr-lab{ font-size:12px; color:var(--text-dim); }
+  .menu-title{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:30px 0 12px; }
+  .code-menu{ display:grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap:16px; }
+  .code-box{ position:relative; aspect-ratio:4/5; width:100%; border-radius:14px; overflow:hidden; border:1px solid var(--panel-border-soft); background:var(--panel-solid); display:flex; flex-direction:column; justify-content:flex-end; text-align:left; color:#fff; padding:0; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+  .code-box:hover{ transform: translateY(-4px); border-color:var(--violet-dim); box-shadow:0 18px 40px -18px rgba(0,0,0,.8); }
+  .code-box:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
+  .code-box .cb-bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .code-box .cb-initial{ position:absolute; top:0; left:0; right:0; bottom:42%; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:44px; font-weight:700; color:rgba(255,255,255,.92); text-shadow:0 2px 14px rgba(0,0,0,.25); }
+  .code-box .cb-text{ position:relative; z-index:1; padding:46px 14px 14px; background:linear-gradient(to top, rgba(8,6,16,.94) 0%, rgba(8,6,16,.78) 55%, rgba(8,6,16,0) 100%); }
+  .code-box .cb-name{ display:block; font-family:var(--font-display); font-size:15.5px; font-weight:600; line-height:1.25; overflow-wrap:anywhere; }
+  .code-box .cb-desc{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; margin-top:5px; font-size:12px; line-height:1.45; color:rgba(255,255,255,.72); }
+  @media (max-width:560px){ .code-menu{ grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; } }
+  .cv-desc{ font-size:13px; line-height:1.55; color:var(--text-dim); margin:-4px 0 16px; overflow-wrap:anywhere; }
+  .cv-image{ width:100%; aspect-ratio:4/3; border-radius:11px; background-size:cover; background-position:center; margin-bottom:16px; border:1px solid var(--panel-border-soft); }
+  .code-view-box{ width:480px; text-align:left; }
+  .cv-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:18px; }
+  .cv-head > div:first-child{ text-align:left; min-width:0; }
+  .cv-app{ text-align:left; font-size:12.5px; color:var(--text-dim); margin-bottom:4px; }
+  .cv-title{ text-align:left; font-family:var(--font-display); font-size:20px; font-weight:600; overflow-wrap:anywhere; }
+  .cv-close{ font-size:26px; line-height:1; color:var(--text-dim); padding:2px 8px; border-radius:8px; }
+  .cv-close:hover{ color:#fff; background:#1D1830; }
+  .cv-code{ font-family:var(--font-mono); font-size:19px; letter-spacing:0.5px; color:var(--cyan); background:#100D1C; border:1px solid var(--panel-border-soft); border-radius:11px; padding:20px 18px; margin-bottom:16px; word-break:break-all; user-select:all; }
+  .code-tabs{ display:flex; flex-wrap:wrap; gap:8px; padding:14px 18px; border-bottom:1px solid var(--panel-border-soft); }
+  .code-tab{ font-size:12.5px; font-weight:500; color:var(--text-dim); padding:7px 13px; border-radius:999px; background:#1D1830; border:1px solid var(--panel-border-soft); transition: color .15s ease, border-color .15s ease, background .15s ease; }
+  .code-tab:hover{ color:#fff; border-color:var(--violet-dim); }
+  .code-tab.active{ color:#fff; border-color:var(--cyan); background:rgba(63,224,223,0.12); }
+  .code-label{ font-size:12px; color:var(--text-faint); margin-bottom:8px; }
+  .codes-editor{ display:flex; flex-direction:column; gap:12px; }
+  .code-row{ display:flex; flex-direction:column; gap:8px; padding:14px; border:1px solid var(--panel-border-soft); border-radius:12px; background:#0F0C1A; }
+  .code-row .cr-top{ display:grid; grid-template-columns:1fr 1.4fr; gap:8px; }
+  .code-row .s-input{ min-width:0; width:100%; }
+  .code-row textarea.s-input{ min-height:56px; }
+  .code-row .cr-bottom{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .code-row .cr-thumb{ width:40px; height:50px; border-radius:7px; background-size:cover; background-position:center; border:1px solid var(--panel-border-soft); flex-shrink:0; }
+  .code-row .cr-file{ font-size:12px; color:var(--text-faint); }
+  .code-row .cr-spacer{ flex:1; }
+  @media (max-width:560px){ .code-row .cr-top{ grid-template-columns:1fr; } }
+
   .screens-title{ font-family:var(--font-display); font-size:14.5px; font-weight:600; margin:24px 0 12px; }
   .screens-row{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
   .screen{ aspect-ratio: 4/5; border-radius:11px; display:flex; align-items:flex-end; padding:12px; font-family:var(--font-display); font-weight:700; font-size:13px; color:#fff; position:relative; overflow:hidden; }
@@ -327,7 +410,15 @@
     .sidebar.open{ transform: translateX(0); }
     .menu-toggle{ display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:9px; background:var(--panel-solid); border:1px solid var(--panel-border-soft); }
     .menu-toggle svg{ width:16px; height:16px; }
-    .search{ display:none; }
+    .topbar{ flex-wrap:wrap; row-gap:10px; }
+    .breadcrumb{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; }
+    .topbar-right{ gap:10px; }
+    .copy-btn{ min-height:38px; padding:8px 13px; }
+    .btn-ghost, .btn-save{ min-height:42px; }
+    .pill-btn{ min-height:38px; }
+    .search{ order:10; flex-basis:100%; max-width:none; padding:10px 12px; }
+    .search input{ font-size:16px; }
+    .sidebar{ height:100dvh; }
     .tile-grid{ grid-template-columns:1fr; }
     .app-grid{ grid-template-columns:1fr; }
     .other-apps{ grid-template-columns: repeat(3,1fr); }
@@ -464,6 +555,12 @@
   }
 
   /* ================= ADMIN ================= */
+  .avatar{ display:flex; align-items:center; justify-content:center; color:#0A0912; }
+  .avatar svg{ width:17px; height:17px; }
+  .avatar .av-open{ display:none; }
+  .avatar.admin-on .av-locked{ display:none; }
+  .avatar.admin-on .av-open{ display:block; }
+  .avatar:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
   .avatar{ cursor:pointer; transition: box-shadow .15s ease, transform .15s ease; position:relative; }
   .avatar:hover{ transform: translateY(-1px); box-shadow: 0 0 0 3px rgba(139,108,255,0.25); }
   .avatar.admin-on::after{ content:''; position:absolute; right:-2px; bottom:-2px; width:10px; height:10px; border-radius:50%; background:var(--online); border:2px solid var(--bg); }
@@ -539,41 +636,15 @@
     </div>
     <div class="nav-sub open" id="codeSub"></div>
 
-    <div class="nav-item" data-route="files">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>
-      <span>Files</span>
-    </div>
-    <div class="nav-item" data-route="settings">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"/></svg>
-      <span>Settings</span>
-    </div>
   </nav>
 
-  <div style="height:1px; background:var(--panel-border-soft); margin:14px 0;"></div>
-
   <nav class="nav-group">
-    <div class="nav-item" data-route="models">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
-      <span>Models</span>
-    </div>
-    <div class="nav-item" data-route="community">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span>Community</span>
-    </div>
-    <div class="nav-item" data-route="settings">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"/></svg>
-      <span>Settings</span>
-    </div>
     <div class="nav-item" id="adminNavItem" data-route="admin" style="display:none;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
       <span>Admin</span>
     </div>
   </nav>
 
-  <div class="sidebar-footer">
-    <div class="status-dot"></div>
-    <span>Online</span>
-  </div>
 </aside>
 
 <main class="main">
@@ -582,17 +653,20 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
     <div class="breadcrumb" id="breadcrumb"><b>Home</b></div>
-    <div class="search">
+    <div class="search" id="searchBox">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <span id="searchPlaceholder">Search anything...</span>
+      <input type="search" id="searchInput" placeholder="Search anything..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search apps and codes" role="combobox" aria-expanded="false" aria-controls="searchResults">
+      <div class="search-results" id="searchResults" role="listbox" hidden></div>
     </div>
     <div class="topbar-right">
-      <div class="bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
       <div class="admin-badge" id="adminBadge" title="Open admin console">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
         Admin
       </div>
-      <div class="avatar" id="avatarBtn" title="Click to sign in as admin"></div>
+      <div class="avatar" id="avatarBtn" title="Click to sign in as admin" role="button" tabindex="0" aria-label="Admin sign in">
+        <svg class="av-locked" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <svg class="av-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/></svg>
+      </div>
     </div>
   </div>
 
@@ -600,35 +674,15 @@
 
     <!-- HOME VIEW -->
     <section class="view active" id="view-home">
-      <div class="hero-line1" id="homeGreeting">Hello, user</div>
-      <div class="hero-sub" id="homeSubtitle">Access your tools, apps and projects all in one place.</div>
+      <div class="hero-line1" id="homeGreeting">Welcome back</div>
+      <div class="hero-sub" id="homeSubtitle">Your codes and links, all in one place.</div>
 
       <div class="tile-grid">
         <div class="tile" data-route="code">
           <div class="tile-icon" style="background:#7C5CFC22; color:#A48CFF;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></div>
           <div><h3>Code</h3><p>Open your coding tools and resources.</p></div>
         </div>
-        <div class="tile" data-route="files">
-          <div class="tile-icon" style="background:#37D8C622; color:#37D8C6;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg></div>
-          <div><h3>Files</h3><p>View and manage your files.</p></div>
-        </div>
-        <div class="tile" data-route="code">
-          <div class="tile-icon" style="background:#F5A62322; color:#F5A623;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-          <div><h3>Apps</h3><p>Explore useful apps and websites.</p></div>
-        </div>
-        <div class="tile" data-route="settings">
-          <div class="tile-icon" style="background:#8B96A522; color:#B8C0CE;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1Z"/></svg></div>
-          <div><h3>Settings</h3><p>Customise your experience.</p></div>
-        </div>
       </div>
-
-      <div class="section-head">
-        <h2>Recent</h2>
-        <div class="view-all" data-route="code">View all
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </div>
-      </div>
-      <div class="recent-list" id="recentList"></div>
     </section>
 
     <!-- CODE LIST VIEW -->
@@ -652,282 +706,60 @@
         <div>
           <div class="detail-title" id="d-title"></div>
           <div class="detail-tag" id="d-tag"></div>
-          <div class="chip-row" id="d-chips"></div>
         </div>
       </div>
 
-      <div class="banner" id="d-banner"><span id="d-banner-text"></span></div>
+      <div class="detail-actions"><a class="link-btn" id="d-open" target="_blank" rel="noopener noreferrer" hidden></a></div>
 
-      <div class="detail-grid">
-        <div>
-          <div class="code-panel">
-            <div class="code-panel-head">
-              <span>App Code</span>
-              <button class="copy-btn" id="copyBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-                Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <div class="dots">
-                <span style="background:#FF6159;"></span><span style="background:#FFC130;"></span><span style="background:#37D858;"></span>
-              </div>
-              <div class="code-value" id="d-code"></div>
-            </div>
-          </div>
-
-          <div class="screens-title">Screenshots</div>
-          <div class="screens-row" id="d-screens"></div>
-        </div>
-
-        <div class="side-panel">
-          <h4>Description</h4>
-          <p id="d-desc"></p>
-          <h4>Features</h4>
-          <div class="feature-list" id="d-features"></div>
-          <button class="open-btn" id="openAppBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>
-            Open App
-          </button>
-        </div>
-      </div>
+      <div class="menu-title">Choose a code</div>
+      <div class="code-menu" id="d-menu"></div>
     </section>
 
-    <!-- SIMPLE PLACEHOLDER VIEWS -->
-    <section class="view" id="view-files"><div class="hero-line1">Files</div><div class="hero-sub">Your uploaded files and project assets will appear here.</div></section>
-    <section class="view" id="view-models"><div class="hero-line1">Models</div><div class="hero-sub">Browse and configure available models.</div></section>
-    <section class="view" id="view-community"><div class="hero-line1">Community</div><div class="hero-sub">Connect with other Launchpad users.</div></section>
+    <!-- CODE PAGE -->
+    <section class="view" id="view-codepage">
+      <div class="back-link" id="cp-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span id="cp-back-text">Back</span>
+      </div>
 
-    <!-- SETTINGS VIEW -->
-    <section class="view" id="view-settings">
-      <div class="hero-line1">Settings</div>
-      <div class="hero-sub">Customise your Launchpad experience.</div>
+      <div class="detail-header">
+        <div class="detail-icon" id="cp-icon"></div>
+        <div>
+          <div class="cp-app" id="cp-app"></div>
+          <div class="detail-title" id="cp-title"></div>
+          <div class="detail-tag" id="cp-desc"></div>
+        </div>
+      </div>
 
-      <div class="settings-shell" style="margin-top:26px;">
-        <nav class="settings-nav" id="settingsNav">
-          <div class="settings-search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-            <input type="text" id="settingsSearch" placeholder="Find a setting...">
+      <div class="cp-stack">
+        <div class="code-panel">
+          <div class="code-panel-head">
+            <span>Code</span>
+            <button class="copy-btn" id="cp-copy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy
+            </button>
           </div>
-          <!-- items injected by JS -->
-        </nav>
-
-        <div class="settings-panels" id="settingsPanels">
-          <!-- ACCOUNT -->
-          <div class="s-panel" data-panel="account">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Profile</h3><p>This information is visible to teachers and classmates you're connected with.</p></div>
-              <div class="field-grid">
-                <div class="field"><label>Display name</label><input class="s-input" id="f-name" type="text" value="User" placeholder="Your name"></div>
-                <div class="field"><label>Username</label><input class="s-input" id="f-username" type="text" value="" placeholder="username"></div>
-                <div class="field"><label>Email address</label><input class="s-input" id="f-email" type="email" value="" placeholder="you@example.com"></div>
-                <div class="field">
-                  <label>Role</label>
-                  <select class="s-select" id="f-role">
-                    <option>Student</option>
-                    <option selected>Teacher</option>
-                    <option>Admin</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="s-card">
-              <div class="s-card-head"><h3>Avatar color</h3><p>Shown across the sidebar and on shared activity.</p></div>
-              <div class="swatch-row" id="avatarSwatches"></div>
+          <div class="code-body">
+            <div class="code-value" id="cp-code"></div>
+            <div class="cp-actions" style="margin-top:18px;">
+              <button type="button" class="link-btn" id="cp-copy-big">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                <span>Copy code</span>
+              </button>
+              <a class="link-btn" id="cp-open" target="_blank" rel="noopener noreferrer" hidden></a>
             </div>
           </div>
+        </div>
 
-          <!-- APPEARANCE -->
-          <div class="s-panel" data-panel="appearance">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Theme</h3><p>Choose how Launchpad looks on this device.</p></div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Appearance mode</strong><span>System will match your device's light or dark setting.</span></div>
-                <div class="s-row-control">
-                  <div class="segmented" id="themeSeg">
-                    <button data-val="dark" class="active">Dark</button>
-                    <button data-val="light">Light</button>
-                    <button data-val="system">System</button>
-                  </div>
-                </div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Accent color</strong><span>Used for buttons, links and active states.</span></div>
-                <div class="s-row-control"><div class="swatch-row" id="accentSwatches"></div></div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Layout density</strong><span>Compact reduces padding across lists and cards.</span></div>
-                <div class="s-row-control">
-                  <div class="segmented" id="densitySeg">
-                    <button data-val="comfortable" class="active">Comfortable</button>
-                    <button data-val="compact">Compact</button>
-                  </div>
-                </div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Interface text size</strong><span>Scales text across the whole app.</span></div>
-                <div class="s-row-control">
-                  <div class="slider-wrap"><input type="range" id="fontSlider" min="90" max="130" value="100" step="5"><span class="slider-val" id="fontSliderVal">100%</span></div>
-                </div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Reduce motion</strong><span>Turns off page transitions and hover animations.</span></div>
-                <div class="s-row-control"><div class="switch" id="t-reduceMotion"></div></div>
-              </div>
-            </div>
-          </div>
+        <div class="cp-section">
+          <h3>Instructions</h3>
+          <div class="cp-instructions" id="cp-instructions"></div>
+        </div>
 
-          <!-- NOTIFICATIONS -->
-          <div class="s-panel" data-panel="notifications">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Notification channels</h3><p>Choose where Launchpad can reach you.</p></div>
-              <div class="s-row"><div class="s-row-label"><strong>Push notifications</strong><span>Alerts on this device when something needs your attention.</span></div><div class="s-row-control"><div class="switch on" id="t-push"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Email digest</strong><span>A weekly summary of activity across your classes.</span></div><div class="s-row-control"><div class="switch on" id="t-emaildigest"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Product updates</strong><span>Occasional news about new apps and features.</span></div><div class="s-row-control"><div class="switch" id="t-productupdates"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Security alerts</strong><span>Sign-ins from a new device or location. Recommended to keep on.</span></div><div class="s-row-control"><div class="switch on" id="t-secalerts"></div></div></div>
-            </div>
-            <div class="s-card">
-              <div class="s-card-head"><h3>Quiet hours</h3><p>Mute non-urgent notifications during these hours.</p></div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Enable quiet hours</strong><span>Security alerts still come through.</span></div>
-                <div class="s-row-control"><div class="switch on" id="t-quiethours"></div></div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Window</strong><span>No notifications outside your class hours.</span></div>
-                <div class="s-row-control" style="display:flex; gap:10px;">
-                  <input class="s-input" type="time" id="f-quietstart" value="21:00" style="min-width:120px;">
-                  <input class="s-input" type="time" id="f-quietend" value="07:00" style="min-width:120px;">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PRIVACY & SECURITY -->
-          <div class="s-panel" data-panel="privacy">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Security</h3><p>Keep your account protected.</p></div>
-              <div class="s-row"><div class="s-row-label"><strong>Two-factor authentication</strong><span>Require a verification code when signing in from a new device.</span></div><div class="s-row-control"><div class="switch on" id="t-2fa"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Login alerts</strong><span>Email me whenever a new sign-in occurs.</span></div><div class="s-row-control"><div class="switch on" id="t-loginalerts"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Share usage data</strong><span>Help improve Launchpad by sharing anonymous usage statistics.</span></div><div class="s-row-control"><div class="switch" id="t-usagedata"></div></div></div>
-            </div>
-            <div class="s-card">
-              <div class="s-card-head"><h3>Active sessions</h3><p>Devices currently signed in to your account.</p></div>
-              <div id="sessionsList"></div>
-            </div>
-          </div>
-
-          <!-- CONNECTED APPS -->
-          <div class="s-panel" data-panel="connected">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Connected apps</h3><p>Apps with access to your Launchpad profile and class rosters.</p></div>
-              <div id="connectedList"></div>
-            </div>
-          </div>
-
-          <!-- LANGUAGE & REGION -->
-          <div class="s-panel" data-panel="language">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Language & region</h3><p>Controls the language and formats used across Launchpad.</p></div>
-              <div class="field-grid">
-                <div class="field">
-                  <label>Language</label>
-                  <select class="s-select" id="f-language">
-                    <option>English (US)</option>
-                    <option>English (UK)</option>
-                    <option>Español</option>
-                    <option>Français</option>
-                    <option>Deutsch</option>
-                    <option>日本語</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Timezone</label>
-                  <select class="s-select" id="f-timezone">
-                    <option>Eastern Time (ET)</option>
-                    <option>Central Time (CT)</option>
-                    <option>Mountain Time (MT)</option>
-                    <option>Pacific Time (PT)</option>
-                    <option>Greenwich Mean Time (GMT)</option>
-                    <option>Central European Time (CET)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="s-row" style="margin-top:4px;">
-                <div class="s-row-label"><strong>Date format</strong><span>Applies to due dates and activity timestamps.</span></div>
-                <div class="s-row-control">
-                  <div class="segmented" id="dateSeg">
-                    <button data-val="mdy" class="active">MM/DD/YYYY</button>
-                    <button data-val="dmy">DD/MM/YYYY</button>
-                    <button data-val="iso">YYYY-MM-DD</button>
-                  </div>
-                </div>
-              </div>
-              <div class="s-row">
-                <div class="s-row-label"><strong>Week starts on</strong><span>Affects the calendar and schedule views.</span></div>
-                <div class="s-row-control">
-                  <div class="segmented" id="weekSeg">
-                    <button data-val="sun" class="active">Sunday</button>
-                    <button data-val="mon">Monday</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ACCESSIBILITY -->
-          <div class="s-panel" data-panel="accessibility">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Accessibility</h3><p>Adjust Launchpad to work best for you.</p></div>
-              <div class="s-row"><div class="s-row-label"><strong>High contrast</strong><span>Increases contrast between text and backgrounds.</span></div><div class="s-row-control"><div class="switch" id="t-highcontrast"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Underline links</strong><span>Makes links easier to spot without relying on color.</span></div><div class="s-row-control"><div class="switch" id="t-underline"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Reduce transparency</strong><span>Replaces blurred panels with solid backgrounds.</span></div><div class="s-row-control"><div class="switch" id="t-reducetransparency"></div></div></div>
-              <div class="s-row"><div class="s-row-label"><strong>Screen reader hints</strong><span>Adds extra spoken context to icons and controls.</span></div><div class="s-row-control"><div class="switch on" id="t-srhints"></div></div></div>
-            </div>
-          </div>
-
-          <!-- ADVANCED -->
-          <div class="s-panel" data-panel="advanced">
-            <div class="s-card">
-              <div class="s-card-head"><h3>Developer</h3><p>Tools for building on top of Launchpad.</p></div>
-              <div class="s-row"><div class="s-row-label"><strong>Developer mode</strong><span>Shows request IDs and raw payloads in the console.</span></div><div class="s-row-control"><div class="switch" id="t-devmode"></div></div></div>
-              <div class="s-row" style="flex-direction:column; align-items:stretch; gap:10px;">
-                <div class="s-row-label"><strong>API key</strong><span>Use this to authenticate requests from your own scripts.</span></div>
-                <div class="key-box">
-                  <span id="apiKeyText">lp_live_••••••••••••7F3A</span>
-                  <button id="revealKeyBtn" title="Reveal">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                  </button>
-                  <button id="copyKeyBtn" title="Copy">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-                  </button>
-                  <button id="regenKeyBtn" title="Regenerate">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/></svg>
-                  </button>
-                </div>
-                <div class="s-footnote">Last used 3 hours ago from 24.18.0.112</div>
-              </div>
-            </div>
-
-            <div class="s-card">
-              <div class="s-card-head"><h3>Data</h3><p>Export or clear locally stored data for this app.</p></div>
-              <div class="item-row"><div class="item-meta"><strong>Export account data</strong><span>Download a JSON copy of your profile and settings.</span></div><div class="item-action"><button class="pill-btn" id="exportBtn">Export</button></div></div>
-              <div class="item-row"><div class="item-meta"><strong>Clear local cache</strong><span>Removes cached thumbnails and offline lesson data.</span></div><div class="item-action"><button class="pill-btn" id="clearCacheBtn">Clear</button></div></div>
-            </div>
-
-            <div class="s-card danger-zone">
-              <div class="s-card-head"><h3>Danger zone</h3><p>These actions are permanent and can't be undone.</p></div>
-              <div class="danger-row">
-                <div class="item-meta"><strong>Sign out of all devices</strong><span>You'll need to sign back in everywhere, including this device.</span></div>
-                <button class="btn-danger" id="signoutAllBtn">Sign out everywhere</button>
-              </div>
-              <div class="danger-row">
-                <div class="item-meta"><strong>Delete account</strong><span>Permanently deletes your profile, classes, and connected apps.</span></div>
-                <button class="btn-danger" id="deleteAccountBtn">Delete account</button>
-              </div>
-            </div>
-          </div>
-
+        <div class="cp-section" id="cp-images-section">
+          <h3>Images</h3>
+          <div class="cp-images" id="cp-images"></div>
         </div>
       </div>
     </section>
@@ -963,9 +795,14 @@
               <div class="field"><label>Badge initial(s)</label><input class="s-input" id="af-initial" type="text" placeholder="e.g. P" maxlength="3"></div>
               <div class="field"><label>Tagline</label><input class="s-input" id="af-tag" type="text" placeholder="Short one-line description"></div>
               <div class="field"><label>Tags (comma separated)</label><input class="s-input" id="af-tags" type="text" placeholder="Education, Collaboration"></div>
+              <div class="field"><label>Website link (optional)</label><input class="s-input" id="af-url" type="url" inputmode="url" placeholder="https://kahoot.it"></div>
               <div class="field"><label>Icon color 1</label><div class="color-field"><input type="color" id="af-color1" value="#8B6CFF"><input class="s-input" id="af-color1-hex" type="text" value="#8B6CFF"></div></div>
               <div class="field"><label>Icon color 2</label><div class="color-field"><input type="color" id="af-color2" value="#6B4FE0"><input class="s-input" id="af-color2-hex" type="text" value="#6B4FE0"></div></div>
-              <div class="field"><label>App code</label><input class="s-input" id="af-code" type="text" placeholder="e.g. PADLET-1234-ABCD"></div>
+            </div>
+            <div class="field">
+              <label>Codes (each one becomes a box on the app page)</label>
+              <div class="codes-editor" id="af-codes"></div>
+              <button type="button" class="pill-btn" id="af-code-add" style="margin-top:8px; align-self:flex-start;">+ Add another code</button>
             </div>
             <div class="field"><label>Description</label><textarea class="s-input" id="af-desc" rows="3" placeholder="What does this app do?"></textarea></div>
             <div class="field"><label>Features (one per line)</label><textarea class="s-input" id="af-features" rows="3" placeholder="Real-time boards&#10;Works on any device"></textarea></div>
@@ -1057,6 +894,11 @@
   </div>
 </main>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image">
+  <button type="button" class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+  <img id="lb-img" alt="">
+</div>
+
 <div class="modal-overlay" id="adminModalOverlay">
   <div class="modal-box" id="adminModalBox">
     <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
@@ -1074,12 +916,6 @@
 <div class="toast" id="toast">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
   <span id="toastText">Copied to clipboard</span>
-</div>
-
-<div class="save-bar" id="saveBar">
-  <span>You have unsaved changes</span>
-  <button class="btn-ghost" id="saveDiscardBtn">Discard</button>
-  <button class="btn-save" id="saveConfirmBtn">Save changes</button>
 </div>
 
 <script>
@@ -1139,15 +975,11 @@ const otherApps = [
   { name:"Notion", initial:"N", color:"#E8E8E8", dark:true },
 ];
 
-const recents = [
-  { app:"blooket", time:"2 hours ago" },
-  { app:"kahoot", time:"1 day ago" },
-  { app:"educationperfect", time:"3 days ago" },
-];
+
 
 const DEFAULT_APPS = JSON.parse(JSON.stringify(apps));
 const DEFAULT_OTHER_APPS = JSON.parse(JSON.stringify(otherApps)).map(o=>({ ...o, id: "oa-" + o.name.toLowerCase().replace(/[^a-z0-9]+/g,"-") }));
-const DEFAULT_SITE = { name:"Launchpad", mark:"L", greeting:"Hello, user", subtitle:"Access your tools, apps and projects all in one place.", searchPlaceholder:"Search anything..." };
+const DEFAULT_SITE = { name:"Launchpad", mark:"L", greeting:"Welcome back", subtitle:"Your codes and links, all in one place.", searchPlaceholder:"Search anything..." };
 
 /* ---------------- Render: sidebar sub-nav ---------------- */
 const codeSub = document.getElementById("codeSub");
@@ -1169,21 +1001,6 @@ function renderCodeSub(){
 }
 
 /* ---------------- Render: recent list (home) ---------------- */
-const recentList = document.getElementById("recentList");
-function renderRecents(){
-  recentList.innerHTML = "";
-  recents.filter(r=>apps.find(x=>x.id===r.app)).forEach(r=>{
-    const a = apps.find(x=>x.id===r.app);
-    const row = document.createElement("div");
-    row.className = "recent-row";
-    row.dataset.route = "detail";
-    row.dataset.app = a.id;
-    row.innerHTML = `<div class="mini-icon" style="${appIconStyle(a)}">${appIconText(a)}</div><span>${a.name}</span><span class="time">${r.time}</span>`;
-    recentList.appendChild(row);
-  });
-  if(!recentList.children.length){ recentList.innerHTML = `<div class="recent-row" style="color:var(--text-faint);">No recent activity yet.</div>`; }
-}
-
 /* ---------------- Render: app grid (code view) ---------------- */
 const appGrid = document.getElementById("appGrid");
 function renderAppGrid(){
@@ -1220,23 +1037,20 @@ function renderOtherApps(){
 }
 
 renderCodeSub();
-renderRecents();
 renderAppGrid();
 renderOtherApps();
 
 function renderAll(){
   renderCodeSub();
-  renderRecents();
-  renderAppGrid();
+    renderAppGrid();
   renderOtherApps();
-  if(typeof renderConnected === "function") renderConnected();
   if(typeof renderAdminApps === "function") renderAdminApps();
 }
 
 /* ---------------- Routing ---------------- */
 function setActiveNav(route, appId){
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
-  if(route==="detail"){
+  if(route==="detail" || route==="codepage"){
     document.getElementById("codeNavToggle").classList.add("active");
     const sub = codeSub.querySelectorAll(".nav-item");
     sub.forEach(n=>{ if(n.dataset.app===appId) n.classList.add("active"); });
@@ -1249,6 +1063,61 @@ function setActiveNav(route, appId){
   }
 }
 
+function appCodes(a){
+  const list = Array.isArray(a.codes) ? a.codes.filter(c=>c && c.code) : [];
+  return list.length ? list : [{ label: "Default", code: a.code || "" }];
+}
+
+const lightbox = document.getElementById("lightbox");
+function openLightbox(src){ document.getElementById("lb-img").src = src; lightbox.classList.add("show"); }
+function closeCodeView(){ lightbox.classList.remove("show"); }
+document.getElementById("lb-close").addEventListener("click", closeCodeView);
+lightbox.addEventListener("click", (e)=>{ if(e.target === lightbox) closeCodeView(); });
+document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeCodeView(); });
+
+let cpApp = null, cpIdx = 0;
+function renderCodePage(appId, idx){
+  const a = apps.find(x=>x.id===appId) || apps[0];
+  const codes = appCodes(a);
+  cpApp = a.id; cpIdx = (idx >= 0 && idx < codes.length) ? idx : 0;
+  const c = codes[cpIdx];
+  const icon = document.getElementById("cp-icon");
+  icon.textContent = appIconText(a);
+  icon.style.cssText = appIconStyle(a);
+  document.getElementById("cp-app").textContent = a.name;
+  document.getElementById("cp-title").textContent = c.label || "Code";
+  const desc = document.getElementById("cp-desc");
+  desc.textContent = c.desc || "";
+  desc.hidden = !c.desc;
+  document.getElementById("cp-code").textContent = c.code;
+  setLinkButton(document.getElementById("cp-open"), c.link || a.url, "Open " + a.name);
+  document.getElementById("cp-back-text").textContent = "Back to " + a.name;
+  const ins = document.getElementById("cp-instructions");
+  const text = (c.instructions || "").trim();
+  ins.textContent = text || "No instructions added yet.";
+  ins.classList.toggle("empty", !text);
+  const imgs = Array.isArray(c.images) ? c.images.filter(Boolean) : [];
+  document.getElementById("cp-images-section").hidden = imgs.length === 0;
+  const wrap = document.getElementById("cp-images");
+  wrap.innerHTML = "";
+  imgs.forEach((src, i)=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cp-img";
+    b.setAttribute("aria-label", "View image " + (i+1));
+    b.style.backgroundImage = `url("${src}")`;
+    b.addEventListener("click", ()=> openLightbox(src));
+    wrap.appendChild(b);
+  });
+}
+document.getElementById("cp-back").addEventListener("click", ()=>{ if(cpApp) navigate("detail", cpApp); });
+document.getElementById("cp-copy").addEventListener("click", ()=>{
+  copyText(document.getElementById("cp-code").textContent);
+});
+document.getElementById("cp-copy-big").addEventListener("click", ()=>{
+  copyText(document.getElementById("cp-code").textContent);
+});
+
 function renderDetail(appId){
   const a = apps.find(x=>x.id===appId) || apps[0];
   const dIcon = document.getElementById("d-icon");
@@ -1256,27 +1125,187 @@ function renderDetail(appId){
   dIcon.style.cssText = appIconStyle(a);
   document.getElementById("d-title").textContent = a.name;
   document.getElementById("d-tag").textContent = a.tag;
-  document.getElementById("d-chips").innerHTML = a.tags.map(t=>`<span class="chip">${t}</span>`).join("");
-  document.getElementById("d-banner").style.background = `linear-gradient(120deg, ${a.color1}, ${a.color2})`;
-  document.getElementById("d-banner-text").textContent = a.name;
-  document.getElementById("d-code").textContent = a.code;
-  document.getElementById("d-desc").textContent = a.desc;
-  document.getElementById("d-features").innerHTML = a.features.map(f=>`
-    <div class="feature-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
-      ${f}
-    </div>`).join("");
-  document.getElementById("d-screens").innerHTML = a.screens.map((c,i)=>{
-    const isImg = typeof c === "string" && !c.startsWith("#");
-    const style = isImg ? `background-image:url('${c}'); background-size:cover; background-position:center;` : `background:${c};`;
-    return `<div class="screen" style="${style}"><span>${a.name} ${i+1}</span></div>`;
-  }).join("");
-  document.getElementById("openAppBtn").onclick = ()=> showToast(`${a.name} would open now — this is a demo.`);
+  setLinkButton(document.getElementById("d-open"), a.url, "Open " + a.name);
+  const menu = document.getElementById("d-menu");
+  menu.innerHTML = "";
+  appCodes(a).forEach((c, i)=>{
+    const wrap = document.createElement("div");
+    wrap.className = "code-box-wrap";
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "code-box";
+    b.setAttribute("aria-label", "Open " + (c.label || "code"));
+    const bg = document.createElement("div");
+    bg.className = "cb-bg";
+    if(c.image){
+      bg.style.backgroundImage = `url("${c.image}")`;
+    } else {
+      bg.style.background = `linear-gradient(145deg, ${a.color1}, ${a.color2})`;
+      const ini = document.createElement("div");
+      ini.className = "cb-initial";
+      ini.textContent = (c.label || a.name || "?").trim().slice(0, 2).toUpperCase();
+      b.appendChild(bg);
+      b.appendChild(ini);
+    }
+    if(c.image) b.appendChild(bg);
+    const text = document.createElement("div");
+    text.className = "cb-text";
+    const name = document.createElement("span");
+    name.className = "cb-name";
+    name.textContent = c.label || ("Code " + (i+1));
+    text.appendChild(name);
+    if(c.desc){
+      const d = document.createElement("span");
+      d.className = "cb-desc";
+      d.textContent = c.desc;
+      text.appendChild(d);
+    }
+    b.appendChild(text);
+    b.addEventListener("click", ()=> navigate("codepage", a.id, i));
+    const cp = document.createElement("button");
+    cp.type = "button";
+    cp.className = "cb-copy";
+    cp.setAttribute("aria-label", "Copy code for " + (c.label || "this code"));
+    cp.title = "Copy code";
+    cp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+    cp.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(c.code, "Copied " + (c.label || "code")); });
+    wrap.append(b, cp);
+    menu.appendChild(wrap);
+  });
 }
 
+/* ---------------- Helpers: copy + links ---------------- */
+function copyText(text, okMsg){
+  const done = ()=> showToast(okMsg || "Code copied to clipboard");
+  const fallback = ()=>{
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed; top:0; left:0; opacity:0;";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      ok ? done() : showToast("Couldn't copy — select the code and copy it manually");
+    }catch(err){ showToast("Couldn't copy — select the code and copy it manually"); }
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else { fallback(); }
+}
+function normalizeUrl(u){
+  u = (u || "").trim();
+  if(!u) return "";
+  if(!/^https?:\/\//i.test(u)) u = "https://" + u;
+  try{
+    const x = new URL(u);
+    return (x.protocol === "http:" || x.protocol === "https:") ? x.href : "";
+  }catch(err){ return ""; }
+}
+const LINK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14 21 3"/></svg>';
+function setLinkButton(el, url, label){
+  const safe = normalizeUrl(url);
+  el.hidden = !safe;
+  if(!safe) return;
+  el.href = safe;
+  el.innerHTML = LINK_ICON + "<span></span>";
+  el.querySelector("span").textContent = label;
+}
+
+/* ---------------- Search ---------------- */
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchBox = document.getElementById("searchBox");
+let searchHits = [], searchSel = -1;
+
+function buildSearchHits(q){
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!terms.length) return [];
+  const has = (text)=> terms.every(t=> (text || "").toLowerCase().includes(t));
+  const hits = [];
+  apps.forEach(a=>{
+    const appText = [a.name, a.tag, a.desc, (a.tags||[]).join(" ")].join(" ");
+    const nameHit = has(a.name);
+    if(nameHit || has(appText)){
+      hits.push({ kind:"App", score: nameHit ? 100 : 40, app:a, title:a.name, sub:a.tag || "", go:()=> navigate("detail", a.id) });
+    }
+    appCodes(a).forEach((c, i)=>{
+      const labelHit = has(c.label);
+      const text = [c.label, c.code, c.desc, c.instructions, a.name].join(" ");
+      if(labelHit || has(text)){
+        hits.push({ kind:"Code", score: labelHit ? 80 : (has(c.code) ? 70 : 30), app:a, title:(c.label || "Code") + (appCodes(a).length > 1 || c.label !== "Default" ? "" : ""), sub:a.name + (c.desc ? " · " + c.desc : ""), go:()=> navigate("codepage", a.id, i) });
+      }
+    });
+  });
+  hits.sort((x,y)=> y.score - x.score);
+  return hits.slice(0, 8);
+}
+function paintSearch(){
+  const q = searchInput.value.trim();
+  searchResults.innerHTML = "";
+  if(!q){ closeSearch(); return; }
+  searchHits = buildSearchHits(q);
+  searchSel = searchHits.length ? 0 : -1;
+  if(!searchHits.length){
+    const e = document.createElement("div");
+    e.className = "sr-empty"; e.textContent = "Nothing found for \u201c" + q + "\u201d";
+    searchResults.appendChild(e);
+  }
+  searchHits.forEach((h, i)=>{
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "sr-item" + (i === 0 ? " active" : ""); b.setAttribute("role", "option");
+    const ic = document.createElement("span");
+    ic.className = "sr-icon"; ic.style.cssText = appIconStyle(h.app); ic.textContent = appIconText(h.app);
+    const tx = document.createElement("span"); tx.className = "sr-text";
+    const t1 = document.createElement("span"); t1.className = "sr-title"; t1.textContent = h.title;
+    const t2 = document.createElement("span"); t2.className = "sr-sub"; t2.textContent = h.sub;
+    tx.append(t1, t2);
+    const k = document.createElement("span"); k.className = "sr-kind"; k.textContent = h.kind;
+    b.append(ic, tx, k);
+    b.addEventListener("mousedown", (e)=> e.preventDefault());
+    b.addEventListener("click", ()=> pickSearch(i));
+    searchResults.appendChild(b);
+  });
+  searchResults.hidden = false;
+  searchInput.setAttribute("aria-expanded", "true");
+}
+function closeSearch(){
+  searchResults.hidden = true;
+  searchInput.setAttribute("aria-expanded", "false");
+  searchSel = -1;
+}
+function pickSearch(i){
+  const h = searchHits[i];
+  if(!h) return;
+  closeSearch();
+  searchInput.value = "";
+  searchInput.blur();
+  h.go();
+}
+function moveSearch(d){
+  const items = searchResults.querySelectorAll(".sr-item");
+  if(!items.length) return;
+  searchSel = (searchSel + d + items.length) % items.length;
+  items.forEach((n, i)=> n.classList.toggle("active", i === searchSel));
+  items[searchSel].scrollIntoView({ block:"nearest" });
+}
+searchInput.addEventListener("input", paintSearch);
+searchInput.addEventListener("focus", ()=>{ if(searchInput.value.trim()) paintSearch(); });
+searchInput.addEventListener("keydown", (e)=>{
+  if(e.key === "ArrowDown"){ e.preventDefault(); moveSearch(1); }
+  else if(e.key === "ArrowUp"){ e.preventDefault(); moveSearch(-1); }
+  else if(e.key === "Enter"){ e.preventDefault(); if(searchSel >= 0) pickSearch(searchSel); }
+  else if(e.key === "Escape"){ searchInput.value = ""; closeSearch(); searchInput.blur(); }
+});
+document.addEventListener("click", (e)=>{ if(!searchBox.contains(e.target)) closeSearch(); });
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName || "")){ e.preventDefault(); searchInput.focus(); }
+});
+
 const breadcrumb = document.getElementById("breadcrumb");
-function navigate(route, appId){
-  if(route==="detail" && !apps.length) route = "code";
+function navigate(route, appId, codeIdx){
+  closeCodeView();
+  if((route==="detail" || route==="codepage") && !apps.length) route = "code";
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   let target = document.getElementById("view-"+route);
   if(!target){ route = "home"; target = document.getElementById("view-home"); }
@@ -1287,8 +1316,14 @@ function navigate(route, appId){
     renderDetail(appId);
     const a = apps.find(x=>x.id===appId) || apps[0];
     breadcrumb.innerHTML = `<span>Code</span> <span style="opacity:.4;">/</span> <b>${a.name}</b>`;
+  } else if(route==="codepage"){
+    renderCodePage(appId, codeIdx);
+    const a = apps.find(x=>x.id===appId) || apps[0];
+    const c = appCodes(a)[cpIdx];
+    breadcrumb.innerHTML = `<span>Code</span> <span style="opacity:.4;">/</span> <span>${a.name}</span> <span style="opacity:.4;">/</span> <b></b>`;
+    breadcrumb.querySelector("b").textContent = c.label || "Code";
   } else {
-    const labels = { home:"Home", code:"Code", files:"Files", settings:"Settings", settings2:"Settings", models:"Models", community:"Community", admin:"Admin" };
+    const labels = { home:"Home", code:"Code", admin:"Admin" };
     breadcrumb.innerHTML = `<b>${labels[route] || "Home"}</b>`;
   }
 
@@ -1308,16 +1343,6 @@ document.addEventListener("click", (e)=>{
     return;
   }
   navigate(item.dataset.route, item.dataset.app);
-});
-
-/* ---------------- Copy button ---------------- */
-document.getElementById("copyBtn").addEventListener("click", ()=>{
-  const text = document.getElementById("d-code").textContent;
-  navigator.clipboard?.writeText(text).then(()=>{
-    showToast("Code copied to clipboard");
-  }).catch(()=>{
-    showToast("Couldn't copy — copy it manually");
-  });
 });
 
 function showToast(msg){
@@ -1341,176 +1366,6 @@ function closeSidebar(){
   overlay.classList.remove("show");
 }
 
-/* ================= SETTINGS ================= */
-const settingsCategories = [
-  { id:"account", label:"Account", icon:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
-  { id:"appearance", label:"Appearance", icon:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>' },
-  { id:"notifications", label:"Notifications", icon:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>' },
-  { id:"privacy", label:"Privacy & Security", icon:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>' },
-  { id:"connected", label:"Connected Apps", icon:'<path d="m8 7-5 5 5 5M16 7l5 5-5 5"/>' },
-  { id:"language", label:"Language & Region", icon:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/>' },
-  { id:"accessibility", label:"Accessibility", icon:'<circle cx="12" cy="4" r="2"/><path d="M5 8h14l-1 3h-4l1 9h-3l-1-6-1 6H7l1-9H4Z"/>' },
-  { id:"advanced", label:"Advanced", icon:'<path d="M14 2 4 14h7l-1 8 10-12h-7l1-8Z"/>' },
-];
-
-const settingsNav = document.getElementById("settingsNav");
-settingsCategories.forEach((c,i)=>{
-  const el = document.createElement("div");
-  el.className = "settings-nav-item" + (i===0 ? " active" : "");
-  el.dataset.panel = c.id;
-  el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">${c.icon}</svg><span>${c.label}</span>`;
-  settingsNav.appendChild(el);
-});
-
-const avatarColors = ["#8B6CFF","#37D8C6","#E84B8A","#F5A623","#2F8CFF","#8FCB4C"];
-document.getElementById("avatarSwatches").innerHTML = avatarColors.map((c,i)=>
-  `<div class="swatch ${i===0?'active':''}" data-group="avatarColor" data-val="${c}" style="background:${c}; color:${c};"></div>`
-).join("");
-document.getElementById("accentSwatches").innerHTML = avatarColors.map((c,i)=>
-  `<div class="swatch ${i===0?'active':''}" data-group="accentColor" data-val="${c}" style="background:${c}; color:${c};"></div>`
-).join("");
-
-const sessions = [
-  { device:"MacBook Pro · Chrome", loc:"Portland, OR", time:"Active now", current:true, icon:"💻" },
-  { device:"iPhone 15 · Launchpad App", loc:"Portland, OR", time:"2 hours ago", current:false, icon:"📱" },
-  { device:"iPad · Safari", loc:"Seattle, WA", time:"3 days ago", current:false, icon:"📱" },
-];
-const sessionsList = document.getElementById("sessionsList");
-function renderSessions(){
-  sessionsList.innerHTML = sessions.map((s,i)=>`
-    <div class="item-row">
-      <div class="item-icon" style="background:#1D1830; font-size:16px;">${s.icon}</div>
-      <div class="item-meta"><strong>${s.device}${s.current?'<span class="badge-current">This device</span>':''}</strong><span>${s.loc} · ${s.time}</span></div>
-      <div class="item-action">${s.current ? '' : `<button class="pill-btn danger" data-revoke="${i}">Revoke</button>`}</div>
-    </div>`).join("");
-}
-renderSessions();
-sessionsList.addEventListener("click",(e)=>{
-  const btn = e.target.closest("[data-revoke]");
-  if(!btn) return;
-  const idx = +btn.dataset.revoke;
-  showToast(`Signed out of ${sessions[idx].device}`);
-  sessions.splice(idx,1);
-  renderSessions();
-});
-
-const connectedApps = apps.map((a,i)=>({ ...a, connected: i<3 }));
-const connectedList = document.getElementById("connectedList");
-function renderConnected(){
-  const prevConn = new Map(connectedApps.map(a=>[a.id, a.connected]));
-  connectedApps.splice(0, connectedApps.length, ...apps.map(a=>({ ...a, connected: prevConn.has(a.id) ? prevConn.get(a.id) : false })));
-  connectedList.innerHTML = connectedApps.map((a,i)=>`
-    <div class="item-row">
-      <div class="item-icon" style="${appIconStyle(a)}">${appIconText(a)}</div>
-      <div class="item-meta"><strong>${a.name}</strong><span>${a.connected ? 'Connected · roster access' : 'Not connected'}</span></div>
-      <div class="item-action"><button class="pill-btn ${a.connected?'connected':''}" data-toggleconn="${i}">${a.connected ? 'Connected' : 'Connect'}</button></div>
-    </div>`).join("");
-}
-renderConnected();
-connectedList.addEventListener("click",(e)=>{
-  const btn = e.target.closest("[data-toggleconn]");
-  if(!btn) return;
-  const idx = +btn.dataset.toggleconn;
-  connectedApps[idx].connected = !connectedApps[idx].connected;
-  showToast(connectedApps[idx].connected ? `Connected ${connectedApps[idx].name}` : `Disconnected ${connectedApps[idx].name}`);
-  renderConnected();
-});
-
-/* ---- settings panel switching + search ---- */
-function showSettingsPanel(id){
-  document.querySelectorAll(".settings-nav-item").forEach(n=>n.classList.toggle("active", n.dataset.panel===id));
-  document.querySelectorAll(".s-panel").forEach(p=>p.classList.toggle("active", p.dataset.panel===id));
-}
-settingsNav.addEventListener("click",(e)=>{
-  const item = e.target.closest(".settings-nav-item");
-  if(!item) return;
-  showSettingsPanel(item.dataset.panel);
-});
-showSettingsPanel("account");
-
-document.getElementById("settingsSearch").addEventListener("input",(e)=>{
-  const q = e.target.value.trim().toLowerCase();
-  if(!q){ document.querySelectorAll(".settings-nav-item").forEach(n=>n.style.display="flex"); return; }
-  document.querySelectorAll(".settings-nav-item").forEach(n=>{
-    n.style.display = n.textContent.toLowerCase().includes(q) ? "flex" : "none";
-  });
-});
-
-/* ---- generic control wiring: toggles / segmented / swatches / sliders / inputs ---- */
-let dirty = false;
-const saveBar = document.getElementById("saveBar");
-function markDirty(){ dirty = true; saveBar.classList.add("show"); }
-
-document.getElementById("settingsPanels").addEventListener("click",(e)=>{
-  const sw = e.target.closest(".switch");
-  if(sw && !sw.classList.contains("disabled")){ sw.classList.toggle("on"); markDirty(); return; }
-
-  const seg = e.target.closest(".segmented button");
-  if(seg){ seg.parentElement.querySelectorAll("button").forEach(b=>b.classList.remove("active")); seg.classList.add("active"); markDirty(); return; }
-
-  const swatch = e.target.closest(".swatch");
-  if(swatch){ const group = swatch.dataset.group; document.querySelectorAll(`.swatch[data-group="${group}"]`).forEach(s=>s.classList.remove("active")); swatch.classList.add("active"); markDirty(); return; }
-});
-document.getElementById("settingsPanels").addEventListener("input",(e)=>{
-  if(e.target.matches("input, select")) markDirty();
-  if(e.target.id === "fontSlider") document.getElementById("fontSliderVal").textContent = e.target.value + "%";
-});
-
-/* Reveal / copy / regenerate API key */
-let keyRevealed = false;
-const fullKey = "lp_live_9f2c1a7e4b6d8834f3a";
-document.getElementById("revealKeyBtn").addEventListener("click",()=>{
-  keyRevealed = !keyRevealed;
-  document.getElementById("apiKeyText").textContent = keyRevealed ? fullKey : "lp_live_••••••••••••7F3A";
-});
-document.getElementById("copyKeyBtn").addEventListener("click",()=>{
-  navigator.clipboard?.writeText(fullKey).then(()=> showToast("API key copied to clipboard")).catch(()=> showToast("Couldn't copy — copy it manually"));
-});
-document.getElementById("regenKeyBtn").addEventListener("click",()=>{
-  showToast("New API key generated — update your scripts");
-  document.getElementById("apiKeyText").textContent = "lp_live_••••••••••••" + Math.random().toString(16).slice(2,6).toUpperCase();
-  keyRevealed = false;
-});
-
-document.getElementById("exportBtn").addEventListener("click",()=> showToast("Preparing your export — we'll email a link"));
-document.getElementById("clearCacheBtn").addEventListener("click",()=> showToast("Local cache cleared"));
-
-/* Danger buttons need a confirm click */
-function armConfirm(btn, confirmLabel, onConfirm){
-  let armed = false;
-  const original = btn.textContent;
-  btn.addEventListener("click", ()=>{
-    if(!armed){
-      armed = true;
-      btn.textContent = confirmLabel;
-      btn.classList.add("confirming");
-      setTimeout(()=>{ armed = false; btn.textContent = original; btn.classList.remove("confirming"); }, 3000);
-    } else {
-      armed = false;
-      btn.textContent = original;
-      btn.classList.remove("confirming");
-      onConfirm();
-    }
-  });
-}
-armConfirm(document.getElementById("signoutAllBtn"), "Click again to confirm", ()=> showToast("Signed out of all devices"));
-armConfirm(document.getElementById("deleteAccountBtn"), "Click again to confirm", ()=> showToast("Account deletion requested — check your email"));
-
-/* Save bar actions */
-document.getElementById("saveDiscardBtn").addEventListener("click",()=>{
-  dirty = false;
-  saveBar.classList.remove("show");
-  showToast("Changes discarded");
-});
-document.getElementById("saveConfirmBtn").addEventListener("click",()=>{
-  dirty = false;
-  saveBar.classList.remove("show");
-  try{
-    localStorage.setItem("launchpad-settings-saved", String(Date.now()));
-  }catch(err){}
-  showToast("Settings saved");
-});
-
 /* ================= ADMIN ================= */
 let isAdmin = false;
 
@@ -1530,7 +1385,7 @@ function openAdminModal(){
 }
 function closeAdminModal(){ modalOverlay.classList.remove("show"); }
 
-const ADMIN_CODE = "launchpad-admin";
+const ADMIN_CODE = "enter";
 function setAdminState(on){
   isAdmin = on;
   adminNavItem.style.display = on ? "flex" : "none";
@@ -1552,6 +1407,7 @@ function tryAdminCode(){
   }
 }
 
+avatarBtn.addEventListener("keydown", (e)=>{ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); avatarBtn.click(); } });
 avatarBtn.addEventListener("click", ()=>{
   if(isAdmin){ navigate("admin"); } else { openAdminModal(); }
 });
@@ -1622,6 +1478,136 @@ async function resolveImageEntry(entry){
   return entry.dataUrl;
 }
 
+function addCodeRow(entry){
+  entry = entry || {};
+  const row = document.createElement("div");
+  row.className = "code-row";
+  row._image = entry.image || null;
+
+  const top = document.createElement("div");
+  top.className = "cr-top";
+  const l = document.createElement("input");
+  l.className = "s-input cr-label"; l.type = "text"; l.placeholder = "Name (e.g. Class 7A)"; l.value = entry.label || "";
+  const c = document.createElement("input");
+  c.className = "s-input cr-code"; c.type = "text"; c.placeholder = "Code (e.g. PADLET-1234-ABCD)"; c.value = entry.code || "";
+  top.append(l, c);
+
+  const d = document.createElement("textarea");
+  d.className = "s-input cr-desc"; d.rows = 2; d.placeholder = "Short description (optional)"; d.value = entry.desc || "";
+
+  const lk = document.createElement("input");
+  lk.className = "s-input cr-link"; lk.type = "url"; lk.inputMode = "url"; lk.placeholder = "Link for this code (optional)"; lk.value = entry.link || "";
+
+  const ins = document.createElement("textarea");
+  ins.className = "s-input cr-ins"; ins.rows = 4; ins.placeholder = "Instructions: how to use this code (optional)"; ins.value = entry.instructions || "";
+
+  row._images = Array.isArray(entry.images) ? entry.images.filter(Boolean).slice(0, 6) : [];
+  const picsLab = document.createElement("label");
+  picsLab.className = "cr-lab"; picsLab.textContent = "Pictures for this code's page (up to 6)";
+  const pics = document.createElement("div");
+  pics.className = "cr-pics";
+  const picFile = document.createElement("input");
+  picFile.type = "file"; picFile.accept = "image/*"; picFile.multiple = true; picFile.style.display = "none";
+  const picAdd = document.createElement("button");
+  picAdd.type = "button"; picAdd.className = "pill-btn"; picAdd.textContent = "Add pictures";
+  const paintPics = ()=>{
+    pics.innerHTML = "";
+    row._images.forEach((src, i)=>{
+      const t = document.createElement("div");
+      t.className = "cr-pic"; t.style.backgroundImage = `url("${src}")`;
+      const rm = document.createElement("button");
+      rm.type = "button"; rm.textContent = "\u00d7"; rm.setAttribute("aria-label", "Remove picture");
+      rm.addEventListener("click", ()=>{ row._images.splice(i, 1); paintPics(); });
+      t.appendChild(rm); pics.appendChild(t);
+    });
+    picAdd.hidden = row._images.length >= 6;
+    pics.appendChild(picAdd);
+  };
+  picAdd.addEventListener("click", ()=> picFile.click());
+  picFile.addEventListener("change", async ()=>{
+    const files = [...(picFile.files || [])];
+    for(const f of files){
+      if(row._images.length >= 6){ showToast("Up to 6 pictures per code"); break; }
+      try{ const r = await resizeImageFile(f, 1000, 0.8); row._images.push(r.dataUrl); }
+      catch(err){ showToast("Couldn't read one of the images"); }
+    }
+    picFile.value = "";
+    paintPics();
+  });
+  paintPics();
+
+  const bottom = document.createElement("div");
+  bottom.className = "cr-bottom";
+  const thumb = document.createElement("div");
+  thumb.className = "cr-thumb";
+  const file = document.createElement("input");
+  file.type = "file"; file.accept = "image/*"; file.style.display = "none";
+  const pick = document.createElement("button");
+  pick.type = "button"; pick.className = "pill-btn";
+  const fname = document.createElement("span");
+  fname.className = "cr-file";
+  const clearImg = document.createElement("button");
+  clearImg.type = "button"; clearImg.className = "pill-btn"; clearImg.textContent = "Remove image";
+  const spacer = document.createElement("span");
+  spacer.className = "cr-spacer";
+  const x = document.createElement("button");
+  x.type = "button"; x.className = "pill-btn danger"; x.textContent = "Remove code";
+
+  const paint = ()=>{
+    const has = !!row._image;
+    thumb.style.backgroundImage = has ? `url("${row._image}")` : "";
+    thumb.hidden = !has;
+    pick.textContent = has ? "Change box image" : "Add box image";
+    clearImg.hidden = !has;
+    fname.textContent = has ? "" : "No box image — a colour box is used";
+  };
+  paint();
+
+  pick.addEventListener("click", ()=> file.click());
+  file.addEventListener("change", async ()=>{
+    const f = file.files && file.files[0];
+    if(!f) return;
+    try{
+      const r = await resizeImageFile(f, 640, 0.8);
+      row._image = r.dataUrl;
+      paint();
+    }catch(err){ showToast("Couldn't read that image"); }
+    file.value = "";
+  });
+  clearImg.addEventListener("click", ()=>{ row._image = null; paint(); });
+  x.addEventListener("click", ()=>{
+    const wrap = document.getElementById("af-codes");
+    if(wrap.children.length > 1){ row.remove(); }
+    else { l.value = ""; c.value = ""; d.value = ""; ins.value = ""; lk.value = ""; row._image = null; row._images = []; paint(); paintPics(); }
+  });
+
+  bottom.append(thumb, pick, clearImg, fname, spacer, x, file);
+  row.append(top, d, lk, ins, picsLab, pics, picFile, bottom);
+  document.getElementById("af-codes").appendChild(row);
+}
+function setCodeRows(list){
+  document.getElementById("af-codes").innerHTML = "";
+  list.forEach(e=> addCodeRow({ ...e, label: (e.label === "Default" && list.length === 1) ? "" : e.label }));
+}
+function readCodeRows(){
+  return [...document.querySelectorAll("#af-codes .code-row")].map((r, i)=>{
+    const o = {
+      label: r.querySelector(".cr-label").value.trim() || ("Code " + (i+1)),
+      code: r.querySelector(".cr-code").value.trim(),
+    };
+    const desc = r.querySelector(".cr-desc").value.trim();
+    if(desc) o.desc = desc;
+    if(r._image) o.image = r._image;
+    const lnk = normalizeUrl(r.querySelector(".cr-link").value);
+    if(lnk) o.link = lnk;
+    const instr = r.querySelector(".cr-ins").value.trim();
+    if(instr) o.instructions = instr;
+    if(r._images && r._images.length) o.images = [...r._images];
+    return o;
+  }).filter(c=>c.code);
+}
+document.getElementById("af-code-add").addEventListener("click", ()=> addCodeRow({}));
+
 function openAppForm(app){
   appForm.classList.add("open");
   document.getElementById("appFormTitle").textContent = app ? `Edit ${app.name}` : "Add a new app";
@@ -1634,7 +1620,8 @@ function openAppForm(app){
   document.getElementById("af-color1-hex").value = app ? app.color1 : "#8B6CFF";
   document.getElementById("af-color2").value = app ? app.color2 : "#6B4FE0";
   document.getElementById("af-color2-hex").value = app ? app.color2 : "#6B4FE0";
-  document.getElementById("af-code").value = app ? app.code : "";
+  document.getElementById("af-url").value = app && app.url ? app.url : "";
+  setCodeRows(app ? appCodes(app) : [{ label: "", code: "" }]);
   document.getElementById("af-desc").value = app ? app.desc : "";
   document.getElementById("af-features").value = app ? app.features.join("\n") : "";
 
@@ -1752,11 +1739,13 @@ document.getElementById("af-save").addEventListener("click", async ()=>{
     tags: document.getElementById("af-tags").value.split(",").map(s=>s.trim()).filter(Boolean),
     color1: document.getElementById("af-color1-hex").value || "#8B6CFF",
     color2: document.getElementById("af-color2-hex").value || "#6B4FE0",
-    code: document.getElementById("af-code").value.trim() || (slugify(name).toUpperCase()+"-0000"),
+    codes: (function(){ const l = readCodeRows(); return l.length ? l : [{ label: "Default", code: slugify(name).toUpperCase()+"-0000" }]; })(),
     desc: document.getElementById("af-desc").value.trim() || "No description provided.",
     features: document.getElementById("af-features").value.split("\n").map(s=>s.trim()).filter(Boolean),
   };
   data.tags = data.tags.length ? data.tags : ["Custom"];
+  data.url = normalizeUrl(document.getElementById("af-url").value) || null;
+  data.code = data.codes[0].code;
 
   data.icon = await resolveImageEntry(formIconData);
   const resolvedScreens = [];
@@ -1884,7 +1873,7 @@ document.getElementById("site-subtitle").addEventListener("input", e=>{
 });
 document.getElementById("site-search").addEventListener("input", e=>{
   siteConfigCache.searchPlaceholder = e.target.value || "Search anything...";
-  document.getElementById("searchPlaceholder").textContent = siteConfigCache.searchPlaceholder;
+  document.getElementById("searchInput").placeholder = siteConfigCache.searchPlaceholder;
   debouncedWriteSiteConfig();
 });
 
@@ -2024,7 +2013,11 @@ function subscribeCloud(){
       if(d.mark) setSiteField("site-mark","brandMark", d.mark);
       setSiteField("site-greeting","homeGreeting", d.greeting);
       setSiteField("site-subtitle","homeSubtitle", d.subtitle);
-      if(d.searchPlaceholder) setSiteField("site-search","searchPlaceholder", d.searchPlaceholder);
+      if(d.searchPlaceholder){
+        document.getElementById("searchInput").placeholder = d.searchPlaceholder;
+        const si = document.getElementById("site-search");
+        if(document.activeElement !== si) si.value = d.searchPlaceholder;
+      }
     }
     applyAppsSnap();
     applyOtherSnap();
@@ -2092,7 +2085,7 @@ const restore = (d)=>{
   if(!d || typeof d !== "object") return d;
   const o = { ...d };
   if(!("color1" in o)) return o;
-  for(const k of ["tags","features","screens"]) o[k] = Array.isArray(o[k]) ? o[k] : (o[k] && typeof o[k] === "object" ? Object.values(o[k]) : []);
+  for(const k of ["tags","features","screens","codes"]) o[k] = Array.isArray(o[k]) ? o[k] : (o[k] && typeof o[k] === "object" ? Object.values(o[k]) : []);
   return o;
 };
 
