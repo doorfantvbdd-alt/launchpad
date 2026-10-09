@@ -1,11 +1,14 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Launchpad — Code</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme: dark;
     --bg: #0A0912;
     --bg-2: #100D1C;
     --panel: #16132480;
@@ -512,6 +515,8 @@
   .thumb-remove:hover{ background:#FF6159; }
   .screens-hint{ font-size:11px; color:var(--text-faint); margin-top:8px; }
 </style>
+</head>
+<body>
 
 <div class="overlay" id="overlay"></div>
 
@@ -1063,7 +1068,6 @@
       <button class="btn-ghost" id="adminCancelBtn">Cancel</button>
       <button class="btn-save" id="adminSubmitBtn">Unlock</button>
     </div>
-    <div class="modal-hint">Demo code: <strong style="color:var(--text);">launchpad-admin</strong></div>
   </div>
 </div>
 
@@ -1508,7 +1512,6 @@ document.getElementById("saveConfirmBtn").addEventListener("click",()=>{
 });
 
 /* ================= ADMIN ================= */
-const ADMIN_CODE = "launchpad-admin";
 let isAdmin = false;
 
 const avatarBtn = document.getElementById("avatarBtn");
@@ -1527,6 +1530,7 @@ function openAdminModal(){
 }
 function closeAdminModal(){ modalOverlay.classList.remove("show"); }
 
+const ADMIN_CODE = "launchpad-admin";
 function setAdminState(on){
   isAdmin = on;
   adminNavItem.style.display = on ? "flex" : "none";
@@ -1541,6 +1545,7 @@ function tryAdminCode(){
     closeAdminModal();
     showToast("Admin mode enabled");
     navigate("admin");
+    maybeSeed();
   } else {
     codeError.classList.add("show");
     modalBox.classList.remove("shake"); void modalBox.offsetWidth; modalBox.classList.add("shake");
@@ -1948,45 +1953,36 @@ document.getElementById("resetSiteBtn").addEventListener("click", async function
     return;
   }
   if(cloudReady && cloudDb){
-    try{
-      await cloudReset();
-      showToast("Launchpad reset for everyone");
-    }catch(err){ showToast("Couldn't reset shared data"); }
-  } else {
-    location.reload();
-  }
+    try{ await cloudReset(); showToast("Launchpad reset for everyone"); }
+    catch(err){ showToast("Couldn't reset shared data"); }
+  } else { location.reload(); }
 });
 
-/* ================= CLOUD SYNC (shared across viewers) ================= */
+/* ================= CLOUD SYNC (Firebase) ================= */
 let cloudDb = null;
-let cloudAssets = null;
+let cloudAssets = null;   /* images are stored inside the documents (resized), so no file storage is needed */
 let cloudReady = false;
 let lastAppsSnap = null;
 let lastOtherSnap = null;
+let cloudConfigExists = null;
+let seeding = false;
 
 async function initCloud(){
-  if(!(window.claude && typeof window.claude.use === "function")){
-    console.log("Not running inside a Claude artifact viewer — shared save unavailable, staying local-only.");
+  const cloud = await new Promise(res=>{
+    if(window.__cloud !== undefined) return res(window.__cloud);
+    window.addEventListener("fb-ready", ()=> res(window.__cloud), { once:true });
+    setTimeout(()=> res(window.__cloud || null), 10000);
+  });
+  if(!cloud){
+    console.log("Firebase isn't configured or couldn't load — staying local-only.");
     return;
   }
-  try{
-    const db = await window.claude.use("db");
-    if(!db){
-      console.log("Shared database not granted for this view — staying local-only.");
-      return;
-    }
-    cloudDb = db;
-    cloudReady = true;
-    try{ cloudAssets = await window.claude.use("assets"); }catch(err){ cloudAssets = null; }
-    subscribeCloud();
-  }catch(err){
-    console.log("Cloud init failed", err);
-  }
+  cloudDb = cloud.db;
+  cloudReady = true;
+  subscribeCloud();
 }
 
-/* Until the shared database has been set up (site/config.seeded), an empty
-   collection means "not set up yet", so the built-in defaults stay on screen.
-   After that, an empty collection is real (an admin removed everything). */
+/* An empty collection means "not set up yet" until site/config.seeded exists. */
 function applyAppsSnap(){
   if(!lastAppsSnap) return;
   if(lastAppsSnap.empty && !siteConfigCache.seeded) return;
@@ -2011,8 +2007,16 @@ function setSiteField(inputId, textId, value){
   if(document.activeElement !== input) input.value = value;
 }
 
+/* The first time an admin signs in to an empty database, fill it with the starting apps. */
+function maybeSeed(){
+  if(!cloudReady || !isAdmin || cloudConfigExists !== false || seeding) return;
+  seeding = true;
+  cloudReset().catch(()=> showToast("Couldn't set up the shared database")).finally(()=>{ seeding = false; });
+}
+
 function subscribeCloud(){
   cloudDb.doc("site/config").onSnapshot((snap)=>{
+    cloudConfigExists = snap.exists;
     if(snap.exists){
       const d = snap.data();
       siteConfigCache = { ...siteConfigCache, ...d };
@@ -2024,6 +2028,7 @@ function subscribeCloud(){
     }
     applyAppsSnap();
     applyOtherSnap();
+    maybeSeed();
   }, err=> console.log("site config sync error", err));
 
   cloudDb.collection("apps").onSnapshot((snap)=>{
@@ -2055,4 +2060,51 @@ initCloud();
 navigate("home");
 </script>
 
-</body></html>
+<!-- Firebase: replace the block below with the config you copy from Firebase -->
+<script type="module">
+const firebaseConfig = {
+  apiKey: "AIzaSyBdDO4T2NGWDvKiIXDT3FztaWPSj0fwix4",
+  authDomain: "sadasd-15771.firebaseapp.com",
+  databaseURL: "https://sadasd-15771-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sadasd-15771",
+  storageBucket: "sadasd-15771.firebasestorage.app",
+  messagingSenderId: "594794538042",
+  appId: "1:594794538042:web:75cd915180c60fb553c103"
+};
+
+(async ()=>{
+  try{
+    if(!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("PASTE")) throw new Error("Firebase config not filled in");
+    const V = "10.12.2";
+    const [appMod, fs] = await Promise.all([
+      import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
+      import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`),
+    ]);
+    const fdb = fs.getFirestore(appMod.initializeApp(firebaseConfig));
+    const docRef = (path)=>{
+      const r = fs.doc(fdb, ...path.split("/"));
+      return {
+        set: (d)=> fs.setDoc(r, d),
+        update: (d)=> fs.updateDoc(r, d),
+        delete: ()=> fs.deleteDoc(r),
+        onSnapshot: (next, err)=> fs.onSnapshot(r, (x)=> next({ exists: x.exists(), data: ()=> x.data() }), err),
+      };
+    };
+    const colRef = (path)=>{
+      const r = fs.collection(fdb, ...path.split("/"));
+      return {
+        add: (d)=> fs.addDoc(r, d),
+        doc: (id)=> docRef(path + "/" + id),
+        onSnapshot: (next, err)=> fs.onSnapshot(r, (x)=> next({ empty: x.empty, docs: x.docs.map(d=>({ id: d.id, data: ()=> d.data() })) }), err),
+      };
+    };
+    window.__cloud = { db: { doc: docRef, collection: colRef } };
+  }catch(err){
+    console.log("Firebase setup skipped:", err.message);
+    window.__cloud = null;
+  }
+  window.dispatchEvent(new Event("fb-ready"));
+})();
+</script>
+</body>
+</html>
